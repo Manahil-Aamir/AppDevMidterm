@@ -15,10 +15,10 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
-        cardColor: Colors.green[50],
+        
         
       ),
-      home: const ProductDisplay(),
+      home: const SpaceDisplay(),
     );
   }
 }
