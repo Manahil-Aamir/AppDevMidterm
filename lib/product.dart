@@ -4,6 +4,7 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'models/launch_model.dart';
+import 'package:readmore/readmore.dart';
 
 //import 'package:productdisplay/models/product_model.dart';
 
@@ -54,6 +55,29 @@ class _SpaceDisplayState extends State<SpaceDisplay> {
     futureSpaceList = fetchSpace();
   }
 
+int r = -1;
+  Text showText(String s, int i){
+   if(i==r){
+    return Text(s);
+   }
+   else{
+    return Text(
+     '${s}',
+     maxLines: 2,
+     overflow: TextOverflow.ellipsis,
+ );
+   }
+  }
+
+void setmore(int i){
+  if(r==i) setState(() {
+    r=-1;
+  });
+  else setState(() {
+    r=i;
+  });
+}
+
 
   @override
   Widget build(BuildContext context) {
@@ -91,10 +115,11 @@ body: SafeArea(
                   Row(
                     children: [
                       Expanded(
-                        child: Text(mission.description.toString(),
-                        maxLines: 1,
-                        ),
-                        
+                        child: Text(
+                          r == index ?  mission.description.toString() : mission.description.toString()+'.......',
+                          maxLines: r == index ? 20:1,
+                          overflow: TextOverflow.ellipsis,
+)
                       )
                     ],
                   ),
@@ -111,14 +136,16 @@ body: SafeArea(
               ),
               child: Row(
                 children: [
-                  Text('More',
+                  Text(r != index ? 'More': 'Less',
                   
                   style: TextStyle(fontWeight: FontWeight.bold)),
-                  Icon(Icons.arrow_downward),
+                  Icon(r!=index ? Icons.arrow_downward : Icons.arrow_upward),
                 ],
                 
               ),
-              onPressed: () {},
+              onPressed: () {
+                setmore(index);
+              },
             ),
 
                   ],),
